@@ -1,0 +1,31 @@
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        maven {
+            name = "Cmt"
+            url = uri("s3://cmt-build/maven")
+            credentials(AwsCredentials)
+        }
+        maven {
+            url = uri("https://artifactory.cmtelematics.com/artifactory/android")
+            credentials(HttpHeaderCredentials) {
+                name = "Authorization"
+                value = "Bearer $cmtToken"
+            }
+            authentication {
+                header(HttpHeaderAuthentication)
+            }
+        }
+    }
+}
+rootProject.name = "CMT SDK"
+include ':app'
