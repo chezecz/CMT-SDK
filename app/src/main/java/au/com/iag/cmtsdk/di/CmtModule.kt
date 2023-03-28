@@ -2,6 +2,8 @@ package au.com.iag.cmtsdk.di
 
 import android.content.Context
 import au.com.iag.cmtsdk.CmtAppModel
+import au.com.iag.cmtsdk.CmtServiceConfiguration
+import com.cmtelematics.sdk.Sdk
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -12,5 +14,8 @@ import dagger.hilt.components.SingletonComponent
 @InstallIn(SingletonComponent::class)
 object CmtModule {
     @Provides
-    fun provideAppModel(@ApplicationContext ctx: Context): CmtAppModel = CmtAppModel(ctx)
+    fun provideAppModel(@ApplicationContext ctx: Context): CmtAppModel {
+        Sdk.init(ctx, CmtServiceConfiguration(ctx))
+        return CmtAppModel(ctx)
+    }
 }
